@@ -1,0 +1,12 @@
+{
+  "name": "grocery_list",
+  "version": "1.0.0",
+  "description": "A web app to help you make a grocery list",
+  "license": "ISC",
+  "author": "Trevor Wiebe",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

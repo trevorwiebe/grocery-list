@@ -46,6 +46,13 @@ const seedDB = async () => {
     await category.save();
     await subCategory.save();
 
+    const list = new GroceryList({
+        dateCreated: new Date()
+    })
+    const item = await Item.findOne({name: "Eggs"})
+    list.items.push(item)
+    await list.save()
+
     db.close()
     
 }

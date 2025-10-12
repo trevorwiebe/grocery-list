@@ -24,7 +24,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/lists', async(req, res) => {
-    res.render('list');
+    const lists = await GroceryList.find({}).populate('items');
+    res.render('list', {lists});
 })
 
 app.get('/items', async (req, res) => {

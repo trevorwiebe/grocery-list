@@ -20,11 +20,14 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
-app.get('/create', async (req, res) => {
-    const list = new GroceryList({ dateCreated: 'now' })
-    const item = new Item({ name: 'Eggs', subCategory: 'abc' });
-    list.items.push(item);
-    res.send(list);
+app.get('/categories', async (req, res) => {
+
+});
+
+app.get('/items', async (req, res) => {
+    const items = await Item.find({})
+    console.log(items);
+    res.render('showItems', {items});
 })
 
 app.listen(3000, () => {

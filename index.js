@@ -1,12 +1,30 @@
 const express = require('express')
-const app = express();
+const mongoose = require('mongoose');
 const path = require('path');
+
+const { GroceryList, Item } = require('./models/modelSchemas');
+
+mongoose.connect('mongodb://localhost:27017/grocery-list')
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log("Database connected");
+})
+
+const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', (req, res) => {
     res.render('home');
+})
+
+app.get('/create', async (req, res) => {
+    const list = new GroceryList({ dateCreated: 'now' })
+    const item = new Item({ name: 'Eggs', subCategory: 'abc' });
+    list.items.push(item);
+    res.send(list);
 })
 
 app.listen(3000, () => {

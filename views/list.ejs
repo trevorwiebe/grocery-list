@@ -4,8 +4,9 @@
     <button class="btn btn-primary">Create New List</button>
 </div>
 <% for(const list of lists) {%>
-    <div>
-        <p>List created on: <%= list.dateCreated.toDateString() %></p>
+    <div class="border-top">
+        <h2 class="fs-4 mt-3"><%= list.title %></h2>
+        <p class="text-secondary">List created on: <%= list.dateCreated.toDateString() %></p>
         <ul>
             <% for(const item of list.items) { %>
                 <li><%= item.name %></li>

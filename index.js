@@ -23,15 +23,19 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
-app.get('/categories', async (req, res) => {
-
-});
+app.get('/lists', async(req, res) => {
+    res.render('list');
+})
 
 app.get('/items', async (req, res) => {
     const items = await Item.find({})
     console.log(items);
     res.render('showItems', {items});
 })
+
+app.get('/categories', async (req, res) => {
+    res.render('category');
+});
 
 app.listen(3000, () => {
     console.log('serving on port 3000');

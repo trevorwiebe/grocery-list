@@ -47,7 +47,12 @@ app.put('/items/:id', async (req, res) => {
         req.params.id, 
         { name: req.body.item.name }
     );
-    res.redirect(`/items`);
+    res.redirect('/items');
+})
+
+app.delete('/items/:id', async (req, res) => {
+    await Item.findByIdAndDelete(req.params.id);
+    res.redirect('/items');
 })
 
 app.get('/categories', async (req, res) => {

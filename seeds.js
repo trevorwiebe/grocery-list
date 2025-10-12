@@ -29,6 +29,7 @@ const seedDB = async () => {
     for(let i in itemList){
         const item = new Item({
             name: itemList[i],
+            order: i,
             subCategoryId: "abc"
         })
 

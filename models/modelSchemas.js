@@ -9,7 +9,14 @@ const GroceryListSchema = new Schema({
 const GroceryList = mongoose.model('GroceryList', GroceryListSchema);
 
 const ItemSchema = new Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true
+    },
+    order: {
+        type: Number,
+        required: true
+    },
     subCategoryId: String
 })
 const Item = mongoose.model('Item', ItemSchema);

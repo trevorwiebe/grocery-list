@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
+const AppError = require('./utils/AppError')
 
 const { GroceryList, Item } = require('./models/modelSchemas');
 
@@ -43,9 +44,11 @@ app.get('/items/:id/edit', async (req, res) => {
 })
 
 app.put('/items/:id', async (req, res) => {
+    const {item} = req.body;
     await Item.findByIdAndUpdate(
         req.params.id, 
-        { name: req.body.item.name }
+        { name: item.name, order: item.order },
+        { runValidators: true }
     );
     res.redirect('/items');
 })
@@ -58,6 +61,16 @@ app.delete('/items/:id', async (req, res) => {
 app.get('/categories', async (req, res) => {
     res.render('category');
 });
+
+app.all(/(.*)/, (req, res, next) => {
+    next(new AppError("Page Not Found", 404))
+})
+
+app.use((err, req, res, next) => {
+    if(!err.message) err.message = "Something went wrong";
+    if(!err.statusCode) err.statusCode = 500;
+    res.render('error', {err});
+})
 
 app.listen(3000, () => {
     console.log('serving on port 3000');

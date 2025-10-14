@@ -73,7 +73,9 @@ app.delete('/items/:id', async (req, res) => {
 })
 
 app.get('/categories', async (req, res) => {
-    const categories = await Category.find({});
+    const categories = await Category
+        .find({})
+        .populate('subCategories');
     res.render('categories/show', {categories});
 });
 

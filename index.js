@@ -77,6 +77,27 @@ app.get('/categories', async (req, res) => {
     res.render('categories/show', {categories});
 });
 
+app.get('/categories/:id/edit', async(req, res) => {
+    const category = await Category.findById(req.params.id);
+    res.render('categories/edit', {category});
+})
+
+app.put('/categories/:id', async (req, res) => {
+    const {category} = req.body;
+    console.log(category);
+    await Category.findByIdAndUpdate(
+        req.params.id,
+        { name: category.name },
+        { runValidators: true }
+    );
+    res.redirect('/categories');
+})
+
+app.delete('/categories/:id', async(req, res) => {
+    await Category.findByIdAndDelete(req.params.id);
+    res.redirect('/categories');
+})
+
 app.all(/(.*)/, (req, res, next) => {
     next(new AppError("Page Not Found", 404))
 })

@@ -34,13 +34,27 @@ app.get('/lists', async(req, res) => {
 })
 
 app.get('/items', async (req, res) => {
-    const items = await Item.find({})
+    const items = await Item.find({});
     res.render('items/show', {items});
+})
+
+app.get('/items/new', async(req, res) => {
+    res.render('items/new');
+})
+
+app.post('/items', async(req, res) => {
+    const { item } = req.body;
+    const newItem = new Item({
+        name: item.name,
+        order: item.order
+    })
+    newItem.save()
+    res.redirect('items');
 })
 
 app.get('/items/:id/edit', async (req, res) => {
     const item = await Item.findById(req.params.id);
-    res.render('items/edit', {item})
+    res.render('items/edit', {item});
 })
 
 app.put('/items/:id', async (req, res) => {

@@ -1,0 +1,9 @@
+<% layout('/layout/boilerplate') %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Categories</h1>
+    <a href="/categories/new" class="btn btn-primary">Add New Category</a>
+</div>
+
+<% for ( let category of categories) { %>
+    <a class="d-block" href="/category/<%= category._id %>/edit"><%= category.name %></a>
+<% } %>

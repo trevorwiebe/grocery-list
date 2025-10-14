@@ -5,7 +5,7 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const AppError = require('./utils/AppError')
 
-const { GroceryList, Item } = require('./models/modelSchemas');
+const { GroceryList, Item, Category } = require('./models/modelSchemas');
 
 mongoose.connect('mongodb://localhost:27017/grocery-list')
 const db = mongoose.connection;
@@ -73,7 +73,8 @@ app.delete('/items/:id', async (req, res) => {
 })
 
 app.get('/categories', async (req, res) => {
-    res.render('category');
+    const categories = await Category.find({});
+    res.render('categories/show', {categories});
 });
 
 app.all(/(.*)/, (req, res, next) => {

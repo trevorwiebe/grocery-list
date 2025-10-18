@@ -5,7 +5,7 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const AppError = require('./utils/AppError')
 
-const { GroceryList, Item, Category } = require('./models/modelSchemas');
+const { GroceryList, Item, Category, SubCategory } = require('./models/modelSchemas');
 
 mongoose.connect('mongodb://localhost:27017/grocery-list')
 const db = mongoose.connection;
@@ -86,7 +86,6 @@ app.get('/categories/:id/edit', async(req, res) => {
 
 app.put('/categories/:id', async (req, res) => {
     const {category} = req.body;
-    console.log(category);
     await Category.findByIdAndUpdate(
         req.params.id,
         { name: category.name },
@@ -97,6 +96,24 @@ app.put('/categories/:id', async (req, res) => {
 
 app.delete('/categories/:id', async(req, res) => {
     await Category.findByIdAndDelete(req.params.id);
+    res.redirect('/categories');
+})
+
+app.get('/subcategories/new', async(req, res) => {
+    const categories = await Category.find({});
+    res.render('subcategories/new', {categories});
+})
+
+app.post('/subcategories', async(req, res) => {
+    const { name, category } = req.body.subCategory;
+    const parentCategory = await Category.findById({_id: category});
+
+    const newSubCat = new SubCategory({
+        name: name
+    });
+    parentCategory.subCategories.push(newSubCat);
+    await newSubCat.save();
+    await parentCategory.save();
     res.redirect('/categories');
 })
 

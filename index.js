@@ -39,15 +39,18 @@ app.get('/items', async (req, res) => {
 })
 
 app.get('/items/new', async(req, res) => {
-    res.render('items/new');
+    const categories = await Category.find({}).populate('subCategories');
+    res.render('items/new', { categories });
 })
 
 app.post('/items', async(req, res) => {
     const { item } = req.body;
+    const subCategory = await SubCategory.findById({_id: item.subCategoryId });
     const newItem = new Item({
         name: item.name,
-        order: item.order
+        order: item.order,
     })
+    newItem.subCategory = subCategory
     newItem.save()
     res.redirect('items');
 })

@@ -17,7 +17,7 @@ const ItemSchema = new Schema({
         type: Number,
         required: true
     },
-    subCategoryId: String
+    subCategory: {type: Schema.Types.ObjectId, ref: 'SubCategory'}
 })
 const Item = mongoose.model('Item', ItemSchema);
 

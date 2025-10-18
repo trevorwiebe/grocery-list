@@ -8,5 +8,55 @@
         <label for="order" class="form-label">Order</label>
         <input type="number" class="form-control" id="order" name="item[order]">
     </div>
-    <button type="submit" class="btn btn-primary">Create Item</button>
+    <div class="mb-3">
+        <label for="categories" class="form-label">Category</label>
+        <select class="form-select" id="categories" name="item[categoryId]">
+            <% for(let category of categories) { %>
+            <option value="<%= category.id %>"><%= category.name %></option>
+            <% } %>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="subCategories" class="form-label">Sub-Category</label>
+        <select class="form-select" id="subCategories" name="item[subCategoryId]">
+            <!-- Options will be populated by JavaScript -->
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary my-3">Create Item</button>
 </form>
+
+<script type="application/json" id="categories-data">
+    <%- JSON.stringify(categories) %>
+</script>
+
+<script>
+    // Store categories data in JavaScript
+    const categoriesData = JSON.parse(document.getElementById('categories-data').textContent);
+
+    const categorySelect = document.getElementById('categories');
+    const subCategorySelect = document.getElementById('subCategories');
+
+    function updateSubCategories() {
+        const selectedCategoryId = categorySelect.value;
+        const selectedCategory = categoriesData.find(cat => cat._id == selectedCategoryId);
+        
+        // Clear existing options
+        subCategorySelect.innerHTML = '';
+        
+        // Populate with subcategories
+        if (selectedCategory && selectedCategory.subCategories) {
+            selectedCategory.subCategories.forEach(subCat => {
+                const option = document.createElement('option');
+                option.value = subCat._id;
+                option.textContent = subCat.name;
+                subCategorySelect.appendChild(option);
+            });
+        }
+    }
+
+    // Update subcategories when category changes
+    categorySelect.addEventListener('change', updateSubCategories);
+
+    // Initialize subcategories on page load
+    updateSubCategories();
+</script>

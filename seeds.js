@@ -25,17 +25,6 @@ const seedDB = async () => {
     await Category.deleteMany({});
     await SubCategory.deleteMany({});
 
-    // Add items
-    for(let i in itemList){
-        const item = new Item({
-            name: itemList[i],
-            order: i,
-            subCategoryId: "abc"
-        })
-
-        await item.save();
-    }
-
     // Add new category
     const subCategory = new SubCategory({
         name: "Meat and cheese drawer"
@@ -47,6 +36,19 @@ const seedDB = async () => {
     await category.save();
     await subCategory.save();
 
+    // Add items
+    for(let i in itemList){
+        const item = new Item({
+            name: itemList[i],
+            order: i,
+            category: category,
+            subCategory: subCategory
+        })
+
+        await item.save();
+    }
+
+    // Add new list
     const list = new GroceryList({
         title: "Wal-Mart",
         dateCreated: new Date()

@@ -4,8 +4,29 @@
     <a href="/items/new" class="btn btn-primary">Add New Item</a>
 </div>
 
+<div class="row">
+    <div class="col">
+        <h2 class="mb-3">Items</h2>
+    </div>
+    <div class="col">
+        <h2 class="mb-3">Category</h2>
+    </div>
+    <div class="col">
+        <h2 class="mb-3">Subcategory</h2>
+    </div>
+</div>
 <% for ( let item of items) { %>
-    <a class="d-block link-offset-2 link-underline link-underline-opacity-0" href="/items/<%= item._id %>/edit"><%= item.name %></a>
+<div class="mb-2 row">
+    <div class="col">
+        <a class="d-block link-offset-2 link-underline link-underline-opacity-0" href="/items/<%= item._id %>/edit"><%= item.name %></a>
+    </div>
+    <div class="col">
+        <a class="d-block link-offset-2 link-underline link-underline-opacity-0" href="/categories/<%= item.category._id %>/edit"><%= item.category.name %></a>
+    </div>
+    <div class="col">
+        <a class="d-block link-offset-2 link-underline link-underline-opacity-0" href="/subcategories/<%= item.subCategory._id %>/edit"><%= item.subCategory.name %></a>
+    </div>
+</div>
 <% } %>
 
 

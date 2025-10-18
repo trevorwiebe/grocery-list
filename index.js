@@ -34,23 +34,27 @@ app.get('/lists', async(req, res) => {
 })
 
 app.get('/items', async (req, res) => {
-    const items = await Item.find({});
+    const items = await Item.find({}).populate('category').populate('subCategory');
+    console.log(items);
     res.render('items/show', {items});
 })
 
 app.get('/items/new', async(req, res) => {
     const categories = await Category.find({}).populate('subCategories');
+    console.log(categories);
     res.render('items/new', { categories });
 })
 
 app.post('/items', async(req, res) => {
     const { item } = req.body;
+    const category = await Category.findById({_id: item.categoryId });
     const subCategory = await SubCategory.findById({_id: item.subCategoryId });
     const newItem = new Item({
         name: item.name,
         order: item.order,
     })
-    newItem.subCategory = subCategory
+    newItem.category = category;
+    newItem.subCategory = subCategory;
     newItem.save()
     res.redirect('items');
 })

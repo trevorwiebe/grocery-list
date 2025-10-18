@@ -120,8 +120,9 @@ app.delete('/categories/:id', async(req, res) => {
 })
 
 app.get('/subcategories/new', async(req, res) => {
+    const selectedCategory = req.query.c;
     const categories = await Category.find({});
-    res.render('subcategories/new', {categories});
+    res.render('subcategories/new', {categories, selectedCategory});
 })
 
 app.post('/subcategories', async(req, res) => {

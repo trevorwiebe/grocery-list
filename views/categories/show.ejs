@@ -8,7 +8,7 @@
     <div>
     <div class="d-flex justify-content-between align-items-center">
         <a class="fs-2 d-block link-offset-2 link-underline link-underline-opacity-0" href="/categories/<%= category._id %>/edit"><%= category.name %></a>
-        <a href="/subcategories/new" class="btn btn-outline-primary">Add New Sub-Category</a>
+        <a href="/subcategories/new?c=<%= category._id %>" class="btn btn-outline-primary">Add New Sub-Category</a>
     </div>
     <div class="mb-2">
         <p class="fw-bold m-0">Subcategories:</p>

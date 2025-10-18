@@ -51,7 +51,7 @@ app.post('/items', async(req, res) => {
     const subCategory = await SubCategory.findById({_id: item.subCategoryId });
     const newItem = new Item({
         name: item.name,
-        order: item.order,
+        order: 0,
     })
     newItem.category = category;
     newItem.subCategory = subCategory;
@@ -68,7 +68,7 @@ app.put('/items/:id', async (req, res) => {
     const {item} = req.body;
     await Item.findByIdAndUpdate(
         req.params.id, 
-        { name: item.name, order: item.order },
+        { name: item.name },
         { runValidators: true }
     );
     res.redirect('/items');

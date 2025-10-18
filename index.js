@@ -124,7 +124,7 @@ app.post('/subcategories', async(req, res) => {
     const newSubCat = new SubCategory({
         name: name
     });
-    parentCategory.subCategories = newSubCat;
+    parentCategory.subCategories.push(newSubCat);
     await newSubCat.save();
     await parentCategory.save();
     res.redirect('/categories');
@@ -148,6 +148,12 @@ app.put('/subcategories/:id', async(req, res) => {
     );
     await subCategory.save();
 
+    res.redirect('/categories');
+})
+
+app.delete('/subcategories/:id', async(req, res) => {
+    const { id } = req.params;
+    await SubCategory.findOneAndDelete({_id: id});
     res.redirect('/categories');
 })
 

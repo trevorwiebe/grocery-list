@@ -111,9 +111,30 @@ app.post('/subcategories', async(req, res) => {
     const newSubCat = new SubCategory({
         name: name
     });
-    parentCategory.subCategories.push(newSubCat);
+    parentCategory.subCategories = newSubCat;
     await newSubCat.save();
     await parentCategory.save();
+    res.redirect('/categories');
+})
+
+app.get('/subcategories/:id/edit', async(req, res) => {
+    const { id } = req.params;
+    const subCategory = await SubCategory.findById({_id: id});
+    const categories = await Category.find({});
+    res.render('subcategories/edit', {subCategory, categories})
+})
+
+app.put('/subcategories/:id', async(req, res) => {
+    const { name, category } = req.body.subCategory;
+    const { id } = req.params;
+
+    // First we update the subCategory
+    const subCategory = await SubCategory.findOneAndUpdate(
+        {_id: id}, 
+        {name: name}
+    );
+    await subCategory.save();
+
     res.redirect('/categories');
 })
 

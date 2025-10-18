@@ -1,0 +1,16 @@
+<% layout('/layout/boilerplate') %>
+<form action="/subcategories/<%= subCategory._id%>?_method=PUT" method="POST">
+    <div class="mb-3">
+        <label for="name" class="form-label">Subcategory Name</label>
+        <input type="text" class="form-control" id="name" name="subCategory[name]" value="<%= subCategory.name %>">
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Parent Category</label>
+        <select class="form-select" id="category" name="subCategory[category]">
+            <% for (let category of categories) { %>
+                <option value="<%= category._id %>"><%= category.name %></option>
+            <% } %>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Edit Subcategory</button>
+</form>

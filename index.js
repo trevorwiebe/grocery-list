@@ -79,6 +79,19 @@ app.get('/categories', async (req, res) => {
     res.render('categories/show', {categories});
 });
 
+app.get('/categories/new', async(req, res) => {
+    res.render('categories/new')
+})
+
+app.post('/categories', async(req, res) =>{
+    const { name } = req.body.category
+    const category = new Category({
+        name: name
+    })
+    await category.save()
+    res.redirect('/categories');
+})
+
 app.get('/categories/:id/edit', async(req, res) => {
     const category = await Category.findById(req.params.id);
     res.render('categories/edit', {category});

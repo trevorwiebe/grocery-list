@@ -28,9 +28,7 @@ const CategorySchema = new Schema({
 })
 const Category = mongoose.model('Category', CategorySchema);
 
-const SubCategorySchema = new Schema({
-    name: String
-})
+const SubCategorySchema = new Schema({name: String})
 const SubCategory = mongoose.model('SubCategory', SubCategorySchema);
 
 module.exports = { 

@@ -6,8 +6,60 @@
         <label for="name" class="form-label">Item Name</label>
         <input type="text" class="form-control" id="name" name="item[name]" value="<%= item.name %>">
     </div>
+    <div class="mb-3">
+        <label for="categories" class="form-label">Category</label>
+        <select class="form-select" id="categories" name="item[categoryId]">
+            <% for(let category of categories) { %>
+            <option value="<%= category.id %>"<% if (category._id == item.category._id.toString()) { %>selected<% } %>><%= category.name %></option>
+            <% } %>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="subCategories" class="form-label">Sub-Category</label>
+        <select class="form-select" id="subCategories" name="item[subCategoryId]"></select>
+    </div>
     <button type="submit" class="btn btn-primary">Update Item</button>
 </form>
 <form action="/items/<%= item._id %>?_method=DELETE" method="POST" class="mt-3">
     <button type="submit" class="btn btn-danger">Delete Item</button>
 </form>
+<script type="application/json" id="categories-data">
+    <%- JSON.stringify(categories) %>
+</script>
+<script type="application/json" id="selected-subcategory"><%- JSON.stringify(item.subCategory._id.toString()) %></script>
+<script>
+    // Store categories data in JavaScript
+    const categoriesData = JSON.parse(document.getElementById('categories-data').textContent);
+    const selectedSubCategoryIdText = document.getElementById('selected-subcategory').textContent;
+
+    const categorySelect = document.getElementById('categories');
+    const subCategorySelect = document.getElementById('subCategories');
+
+    function updateSubCategories() {
+        const selectedCategoryId = categorySelect.value;
+        const selectedCategory = categoriesData.find(cat => cat._id == selectedCategoryId);
+        
+        // Clear existing options
+        subCategorySelect.innerHTML = '';
+        
+        // Populate with subcategories
+        if (selectedCategory && selectedCategory.subCategories) {
+            selectedCategory.subCategories.forEach(subCat => {
+                const option = document.createElement('option');
+                option.value = subCat._id;
+                option.textContent = subCat.name;
+                if(selectedSubCategoryIdText && selectedSubCategoryIdText.length > 0){
+                    const selectedSubCategoryId = JSON.parse(selectedSubCategoryIdText);
+                    option.selected = (subCat._id == selectedSubCategoryId);
+                }
+                subCategorySelect.appendChild(option);
+            });
+        }
+    }
+
+    // Update subcategories when category changes
+    categorySelect.addEventListener('change', updateSubCategories);
+
+    // Initialize subcategories on page load
+    updateSubCategories();
+</script>

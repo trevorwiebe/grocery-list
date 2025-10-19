@@ -14,7 +14,7 @@ db.once("open", () => {
 })
 
 const itemList = [
-    "Eggs", "Milk", "Cheese", "Flour", "Sugar", "Coffee", "Butter", "Apples", "Carrots"
+    "Eggs", "Peaches"
 ]
 
 const seedDB = async () => {

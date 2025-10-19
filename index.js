@@ -64,15 +64,24 @@ app.post('/items', async(req, res) => {
 })
 
 app.get('/items/:id/edit', async (req, res) => {
-    const item = await Item.findById(req.params.id);
-    res.render('items/edit', {item});
+    const item = await Item.findById(req.params.id).populate('category');
+    const categories = await Category.find({}).populate('subCategories');
+    res.render('items/edit', {item, categories});
 })
 
 app.put('/items/:id', async (req, res) => {
     const {item} = req.body;
+
+    const category = await Category.findById({_id: item.categoryId });
+    const subCategory = await SubCategory.findById({_id: item.subCategoryId });
+
     await Item.findByIdAndUpdate(
         req.params.id, 
-        { name: item.name },
+        { 
+            name: item.name,
+            category: category,
+            subCategory: subCategory
+        },
         { runValidators: true }
     );
     res.redirect('/items');

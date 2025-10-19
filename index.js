@@ -35,13 +35,11 @@ app.get('/lists', async(req, res) => {
 
 app.get('/items', async (req, res) => {
     const items = await Item.find({}).populate('category').populate('subCategory');
-    console.log(items);
     res.render('items/show', {items});
 })
 
 app.get('/items/new', async(req, res) => {
     const categories = await Category.find({}).populate('subCategories');
-    console.log(categories);
     res.render('items/new', { categories });
 })
 

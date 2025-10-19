@@ -27,13 +27,12 @@
     <%- JSON.stringify(categories) %>
 </script>
 
-<script type="application/json" id="selected-subcategory">
-    <%- JSON.stringify(sc) %>
-</script>
+<script type="application/json" id="selected-subcategory"><%- JSON.stringify(sc) %></script>
 
 <script>
     // Store categories data in JavaScript
     const categoriesData = JSON.parse(document.getElementById('categories-data').textContent);
+    const selectedSubCategoryIdText = document.getElementById('selected-subcategory').textContent;
 
     const categorySelect = document.getElementById('categories');
     const subCategorySelect = document.getElementById('subCategories');
@@ -51,7 +50,10 @@
                 const option = document.createElement('option');
                 option.value = subCat._id;
                 option.textContent = subCat.name;
-                option.selected = (subCat._id == JSON.parse(document.getElementById('selected-subcategory').textContent));
+                if(selectedSubCategoryIdText && selectedSubCategoryIdText.length > 0){
+                    const selectedSubCategoryId = JSON.parse(selectedSubCategoryIdText);
+                    option.selected = (subCat._id == selectedSubCategoryId);
+                }
                 subCategorySelect.appendChild(option);
             });
         }

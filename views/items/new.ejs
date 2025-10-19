@@ -10,21 +10,25 @@
         <label for="categories" class="form-label">Category</label>
         <select class="form-select" id="categories" name="item[categoryId]">
             <% for(let category of categories) { %>
-            <option value="<%= category.id %>"><%= category.name %></option>
+            <option value="<%= category.id %>"<% if (category._id == c) { %>selected<% } %>><%= category.name %></option>
             <% } %>
         </select>
     </div>
     <div class="mb-3">
         <label for="subCategories" class="form-label">Sub-Category</label>
         <select class="form-select" id="subCategories" name="item[subCategoryId]">
-            <!-- Options will be populated by JavaScript -->
         </select>
     </div>
-    <button type="submit" class="btn btn-primary my-3">Create Item</button>
+    <button type="submit" class="btn btn-primary my-3" name="action" value="save">Save</button>
+    <button type="submit" class="btn btn-outline-primary my-3" name="action" value="save-and-add-another">Save & Add Another</button>
 </form>
 
 <script type="application/json" id="categories-data">
     <%- JSON.stringify(categories) %>
+</script>
+
+<script type="application/json" id="selected-subcategory">
+    <%- JSON.stringify(sc) %>
 </script>
 
 <script>
@@ -47,6 +51,7 @@
                 const option = document.createElement('option');
                 option.value = subCat._id;
                 option.textContent = subCat.name;
+                option.selected = (subCat._id == JSON.parse(document.getElementById('selected-subcategory').textContent));
                 subCategorySelect.appendChild(option);
             });
         }

@@ -39,12 +39,14 @@ app.get('/items', async (req, res) => {
 })
 
 app.get('/items/new', async(req, res) => {
+    const {c, sc} = req.query;
     const categories = await Category.find({}).populate('subCategories');
-    res.render('items/new', { categories });
+    res.render('items/new', { categories, c, sc });
 })
 
 app.post('/items', async(req, res) => {
     const { item } = req.body;
+    const { action } = req.body;
     const category = await Category.findById({_id: item.categoryId });
     const subCategory = await SubCategory.findById({_id: item.subCategoryId });
     const newItem = new Item({
@@ -54,7 +56,11 @@ app.post('/items', async(req, res) => {
     newItem.category = category;
     newItem.subCategory = subCategory;
     newItem.save()
-    res.redirect('items');
+    if(action === 'save-and-add-another'){
+        res.redirect(`/items/new?c=${item.categoryId}&sc=${item.subCategoryId}`);
+    }else{
+        res.redirect('/items');
+    }
 })
 
 app.get('/items/:id/edit', async (req, res) => {

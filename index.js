@@ -5,7 +5,10 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const AppError = require('./utils/AppError')
 
-const { GroceryList, Item, Category, SubCategory } = require('./models/modelSchemas');
+const GroceryList = require('./models/list');
+const Item = require('./models/item');
+const Category = require('./models/category');
+const SubCategory = require('./models/subcategory');
 
 mongoose.connect('mongodb://localhost:27017/grocery-list')
 const db = mongoose.connection;

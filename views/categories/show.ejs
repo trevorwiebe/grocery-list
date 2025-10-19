@@ -4,20 +4,24 @@
     <a href="/categories/new" class="btn btn-primary">Add New Category</a>
 </div>
 
-<% for ( let category of categories) { %>
-    <div>
-    <div class="d-flex justify-content-between align-items-center">
-        <a class="fs-2 d-block link-offset-2 link-underline link-underline-opacity-0" href="/categories/<%= category._id %>/edit"><%= category.name %></a>
-        <a href="/subcategories/new?c=<%= category._id %>" class="btn btn-outline-primary">Add New Sub-Category</a>
-    </div>
-    <div class="mb-2">
-        <p class="fw-bold m-0">Subcategories:</p>
-        <% if (category.subCategories.length === 0) { %>
-            <span>No subcategories</span>
-        <% } else { %>
-            <% for (let subCategory of category.subCategories) { %>
-                <a href="/subcategories/<%= subCategory._id %>/edit?c=<%= category._id %>" class="d-block link-offset-2 link-underline link-underline-opacity-0"><%= subCategory.name %></a>
+<% if(categories && categories.length > 0) { %>
+    <% for ( let category of categories) { %>
+        <div>
+        <div class="d-flex justify-content-between align-items-center">
+            <a class="fs-2 d-block link-offset-2 link-underline link-underline-opacity-0" href="/categories/<%= category._id %>/edit"><%= category.name %></a>
+            <a href="/subcategories/new?c=<%= category._id %>" class="btn btn-outline-primary">Add New Sub-Category</a>
+        </div>
+        <div class="mb-2">
+            <p class="fw-bold m-0">Subcategories:</p>
+            <% if (category.subCategories.length === 0) { %>
+                <span>No subcategories</span>
+            <% } else { %>
+                <% for (let subCategory of category.subCategories) { %>
+                    <a href="/subcategories/<%= subCategory._id %>/edit?c=<%= category._id %>" class="d-block link-offset-2 link-underline link-underline-opacity-0"><%= subCategory.name %></a>
+                <% } %>
             <% } %>
-        <% } %>
-    </div>
+        </div>
+    <% } %>
+<% } else { %>
+    <p>No categories found. Create one to get started.</p>
 <% } %>

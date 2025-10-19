@@ -1,5 +1,6 @@
 <% layout('/layout/boilerplate') %>
 <a href="/categories" class="btn btn-sm btn-outline-primary my-3">Back</a>
+<h1>New Subcategory</h1>
 <form action="/subcategories" method="POST">
     <div class="mb-3">
         <label for="name" class="form-label">Subcategory Name</label>
@@ -13,5 +14,6 @@
             <% } %>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Create Subcategory</button>
+    <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
+    <button type="submit" class="btn btn-outline-primary" name="action" value="save-and-add-another">Save and add another</button>
 </form>

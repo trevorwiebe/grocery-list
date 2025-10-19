@@ -90,11 +90,16 @@ app.get('/categories/new', async(req, res) => {
 
 app.post('/categories', async(req, res) =>{
     const { name } = req.body.category
+    const { action } = req.body;
     const category = new Category({
         name: name
     })
     await category.save()
-    res.redirect('/categories');
+    if (action === 'save-and-add-another') {
+        res.redirect('/categories/new');
+    } else {
+        res.redirect('/categories');
+    }
 })
 
 app.get('/categories/:id/edit', async(req, res) => {
@@ -125,6 +130,7 @@ app.get('/subcategories/new', async(req, res) => {
 
 app.post('/subcategories', async(req, res) => {
     const { name, category } = req.body.subCategory;
+    const { action } = req.body;
     const parentCategory = await Category.findById({_id: category});
 
     const newSubCat = new SubCategory({
@@ -133,7 +139,11 @@ app.post('/subcategories', async(req, res) => {
     parentCategory.subCategories.push(newSubCat);
     await newSubCat.save();
     await parentCategory.save();
-    res.redirect('/categories');
+    if (action === 'save-and-add-another') {
+        res.redirect(`/subcategories/new?c=${category}`);
+    } else {
+        res.redirect('/categories');
+    }
 })
 
 app.get('/subcategories/:id/edit', async(req, res) => {

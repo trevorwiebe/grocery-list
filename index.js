@@ -138,9 +138,10 @@ app.post('/subcategories', async(req, res) => {
 
 app.get('/subcategories/:id/edit', async(req, res) => {
     const { id } = req.params;
+    const selectedCategory = req.query.c;
     const subCategory = await SubCategory.findById({_id: id});
     const categories = await Category.find({});
-    res.render('subcategories/edit', {subCategory, categories})
+    res.render('subcategories/edit', {subCategory, categories, selectedCategory})
 })
 
 app.put('/subcategories/:id', async(req, res) => {

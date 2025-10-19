@@ -16,7 +16,7 @@
             <span>No subcategories</span>
         <% } else { %>
             <% for (let subCategory of category.subCategories) { %>
-                <a href="/subcategories/<%= subCategory._id %>/edit" class="d-block link-offset-2 link-underline link-underline-opacity-0"><%= subCategory.name %></a>
+                <a href="/subcategories/<%= subCategory._id %>/edit?c=<%= category._id %>" class="d-block link-offset-2 link-underline link-underline-opacity-0"><%= subCategory.name %></a>
             <% } %>
         <% } %>
     </div>

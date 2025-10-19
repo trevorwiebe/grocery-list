@@ -1,5 +1,5 @@
 <% layout('/layout/boilerplate') %>
-<a href="/items" class="btn btn-sm btn-outline-primary my-3">Back</a>
+<button onclick="history.back()" class="btn btn-sm btn-outline-primary my-3">Back</button>
 <h1>Edit item</h1>
 <form action="/items/<%= item._id %>?_method=PUT" method="POST">
     <div class="mb-3">

@@ -1,14 +1,22 @@
 <% layout('/layout/boilerplate') %>
-<h1>Sign Up</h1>
-<p>Welcome.  Please sign up to continue.</p>
-<form action="/signup" method="POST">
-    <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" name="email" required>
+
+<div class="row align-items-center">
+    <div class="col-md-4 offset-md-1">
+        <img src="res/sign-up.jpg" alt="Sign In Image" class="img-fluid rounded-3 shadow">
     </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" name="password" required>
+    <div class="col-md-6">
+        <h1>Sign Up</h1>
+        <p>Welcome.  Please sign up to continue.</p>
+        <form action="/signup" method="POST">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign Up</button> 
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary">Sign Up</button> 
-</form>
+</div>

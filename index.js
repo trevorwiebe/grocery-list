@@ -78,19 +78,23 @@ app.get('/signin', (req, res) => {
 app.post('/signin', async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({username: email})
-    const validPassword = await bcrypt.compare(password, user.hash);
-    if(validPassword){
-        req.session.user_id = user._id;
+    if(user){
+        const validPassword = await bcrypt.compare(password, user.hash);
+        if(validPassword){
+            req.session.user_id = user._id;
 
-        res.redirect('/');
+            res.redirect('/');
+        }else{
+            res.redirect('/signin');
+        }
     }else{
-        res.redirect('signin/signin');
+        res.redirect('/signin');
     }
 })
 
 app.post('/signout', (req, res) => {
     req.session.user_id = null;
-    res.redirect('/');
+    res.redirect('/signin');
 })
 
 app.get('/lists', requireSignin, async(req, res) => {

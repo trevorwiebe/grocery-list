@@ -1,10 +1,7 @@
 <% layout('/layout/boilerplate') %>
 
 <div class="row align-items-center">
-    <div class="col-md-4 offset-md-1">
-        <img src="res/sign-up.jpg" alt="Sign In Image" class="img-fluid rounded-3 shadow">
-    </div>
-    <div class="col-md-6">
+    <div class="col-md-6 order-1 order-md-2 mb-3">
         <h1>Sign Up</h1>
         <p>Welcome.  Please sign up to continue.</p>
         <form action="/signup" method="POST">
@@ -18,5 +15,8 @@
             </div>
             <button type="submit" class="btn btn-primary">Sign Up</button> 
         </form>
+    </div>
+    <div class="col-md-4 offset-md-1 order-2 order-md-1">
+        <img src="res/sign-up.jpg" alt="Sign In Image" class="img-fluid rounded-3 shadow">
     </div>
 </div>
